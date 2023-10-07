@@ -14,9 +14,12 @@ from airflow import settings
 from airflow.configuration import conf
 from airflow.models import DAG, DagTag, DagModel, DagRun, Log, XCom, SlaMiss, TaskInstance, Variable
 try:
-    from airflow.jobs import BaseJob
+    from airflow.jobs.job import Job as BaseJob
 except Exception as e:
-    from airflow.jobs.base_job import BaseJob
+    try:
+        from airflow.jobs.base_job import BaseJob
+    except Exception as e:
+        from airflow.jobs import BaseJob
 from airflow.operators.python_operator import PythonOperator
 from datetime import datetime, timedelta
 import dateutil.parser
